@@ -1,0 +1,119 @@
+/* Theme: fresh linen. White page, navy ink, one laundry-blue accent. The film is the only loud thing. */
+:root {
+  --ink: #12233d;
+  --slate: #5b6878;
+  --linen: #f5f8fa;
+  --line: #dfe5ea;
+  --blue: #1f5fd6;
+  --blue-deep: #174bb0;
+  --blue-wash: #e9f0fd;
+  --red: #b3261e;
+  --font: 'Archivo Variable', system-ui, sans-serif;
+  --radius: 10px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font: 17px/1.6 var(--font); color: var(--ink); background: #fff; -webkit-font-smoothing: antialiased; }
+
+/* Header */
+header { background: #fff; color: var(--ink); padding: 16px clamp(20px, 6vw, 48px); display: flex; gap: 24px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+header a { color: var(--ink); text-decoration: none; }
+header a:hover { color: var(--blue); }
+header .brand { margin-right: auto; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; }
+header form { margin: 0; }
+
+/* Page column: everything sits in a readable column unless it asks to bleed. */
+main { padding: 0 0 64px; }
+main > * { max-width: 680px; margin-inline: auto; padding-inline: 20px; }
+main > .bleed { max-width: none; padding-inline: 0; }
+main > .bleed:last-child { margin-bottom: -64px; }
+
+h1, h2, .display { font-weight: 650; line-height: 1.1; margin-block: 0 12px; text-wrap: balance; letter-spacing: -0.025em; }
+h1 { font-size: 2rem; margin-block-start: 48px; }
+h2 { font-size: 1.4rem; }
+a { color: var(--blue); text-underline-offset: 3px; }
+.muted { color: var(--slate); font-size: 0.92rem; }
+
+/* Forms and buttons */
+label { display: block; margin: 20px 0 6px; font-weight: 550; font-size: 0.95rem; }
+input, select, textarea { width: 100%; padding: 12px 14px; font: inherit; color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+input:focus, select:focus, textarea:focus { border-color: var(--blue); outline: 3px solid var(--blue-wash); }
+button, .button { display: inline-block; min-height: 48px; padding: 12px 22px; font: 600 0.95rem/1.5 var(--font); color: #fff; background: var(--ink); border: 0; border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: background 0.15s; }
+button:hover, .button:hover { background: #1d3557; }
+.button.accent { background: var(--blue); color: #fff; }
+.button.accent:hover { background: var(--blue-deep); }
+button.plain { background: none; color: var(--slate); padding: 0; min-height: 0; font-weight: 400; }
+button.plain:hover { background: none; color: var(--blue); }
+button.secondary { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+button.secondary:hover { background: var(--linen); }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+/* Shared pieces */
+.error { background: #fdf1f0; color: var(--red); border-radius: var(--radius); padding: 12px 16px; margin-block: 16px; }
+.notice { background: var(--linen); border-radius: var(--radius); padding: 12px 16px; margin-block: 16px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; margin-block: 14px; }
+main > .card, main > .error, main > .notice { max-width: 640px; }
+.status { display: inline-block; padding: 2px 12px; border-radius: 99px; background: var(--blue-wash); color: var(--blue-deep); font-size: 0.85rem; font-weight: 600; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+ol.timeline { list-style: none; padding-left: 8px; }
+ol.timeline li { position: relative; padding: 0 0 20px 24px; border-left: 1px solid var(--line); }
+ol.timeline li::before { content: ''; position: absolute; left: -5px; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+ol.timeline li:last-child { border-left-color: transparent; }
+
+/* Home: the film. --p runs 0 to 1 as the visitor scrolls through the section. */
+.film { --p: 0; height: 560vh; background: #2a2f33; color: #fff; }
+.film-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.film-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.film-words { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding: 28px 20px 40px; background: linear-gradient(to bottom, rgba(18, 35, 61, 0.86) 0%, rgba(18, 35, 61, 0.5) 28%, transparent 48%, transparent 78%, rgba(18, 35, 61, 0.55) 100%); }
+.film-lines { display: grid; width: 100%; }
+.cap { grid-area: 1 / 1; opacity: calc(clamp(0, (var(--p) - var(--from)) * 14, 1) * clamp(0, (var(--to) - var(--p)) * 14, 1)); transform: translateY(calc((1 - clamp(0, (var(--p) - var(--from)) * 14, 1)) * 18px)); }
+.cap-first { opacity: clamp(0, calc((0.12 - var(--p)) * 14), 1); transform: none; }
+.cap h1, .cap .display { font-size: clamp(2.1rem, 9vw, 3.2rem); line-height: 1.05; margin: 0 0 12px; max-width: 12ch; color: inherit; }
+.cap p:not(.display) { max-width: 30ch; margin: 0; font-size: 1.05rem; }
+.film-rail { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255, 255, 255, 0.2); z-index: 2; }
+.film-rail i { display: block; height: 100%; background: var(--blue); transform-origin: left; transform: scaleX(var(--p)); }
+
+/* Wide screens: the film becomes a framed portrait on a white page, with the words beside it. */
+@media (min-width: 900px) {
+  .film { background: #fff; color: var(--ink); }
+  .film-stage { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 0.3fr); align-items: center; }
+  .film-canvas { position: static; grid-column: 2; height: min(84svh, 820px); width: auto; aspect-ratio: 9 / 16; border-radius: 20px; }
+  .film-words { grid-column: 1; grid-row: 1; background: none; justify-content: center; gap: 36px; padding: 0 32px 0 clamp(32px, 8vw, 140px); }
+  .cap h1, .cap .display { font-size: clamp(2.6rem, 4.4vw, 4.2rem); max-width: 13ch; }
+  .cap p:not(.display) { font-size: 1.15rem; color: var(--slate); }
+  .film-rail { background: var(--line); }
+}
+
+/* Home: bands under the film */
+.band { padding: 88px 0; }
+.band-inner { max-width: 960px; margin: 0 auto; padding: 0 clamp(20px, 6vw, 48px); }
+.band-inner.two { display: grid; gap: 48px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: start; }
+.band h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+.band.soft { background: var(--linen); }
+.band.dark { border-top: 1px solid var(--line); }
+.lede { font-size: 1.15rem; max-width: 48ch; color: var(--slate); }
+.towns { list-style: none; padding: 0; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.towns li { font-weight: 550; padding: 6px 16px; border: 1px solid var(--line); border-radius: 99px; }
+.windows { list-style: none; padding: 0; margin: 16px 0 8px; }
+.windows li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.windows strong { font-weight: 550; }
+.windows span { color: var(--slate); white-space: nowrap; }
+.price { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+.price h2 { font-size: 1.1rem; font-weight: 550; letter-spacing: 0; color: var(--slate); }
+.price-figure { font-weight: 650; letter-spacing: -0.03em; font-size: clamp(2.4rem, 8vw, 3.2rem); line-height: 1; margin: 0 0 6px; }
+.price-figure small { font-weight: 400; letter-spacing: 0; font-size: 1rem; color: var(--slate); }
+.price .button { margin-top: 12px; }
+.track { list-style: none; display: flex; padding: 8px 0 20px; margin: 24px 0 8px; overflow-x: auto; scroll-snap-type: x proximity; }
+.track li { flex: 0 0 auto; position: relative; padding: 24px 36px 0 0; font-weight: 500; white-space: nowrap; scroll-snap-align: start; }
+.track li::before { content: ''; position: absolute; left: 0; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+.track li::after { content: ''; position: absolute; left: 9px; right: 0; top: 8px; height: 1px; background: var(--line); }
+.track li:last-child::after { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .film { height: auto; }
+  .film-stage { position: relative; height: auto; min-height: 100svh; }
+  .film-lines { display: block; }
+  .cap, .cap-first { opacity: 1; transform: none; margin-bottom: 20px; }
+  .cap h1, .cap .display { font-size: 1.8rem; }
+  .film-rail { display: none; }
+  button, .button { transition: none; }
+}

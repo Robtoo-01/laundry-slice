@@ -1,0 +1,10 @@
+# Settings read by the Supabase CLI when deploying the Edge Functions.
+project_id = "fuapap"
+
+# Both functions check the caller themselves: book-pickup checks the customer's sign-in token,
+# and payment-webhook checks Stripe's signature. So the platform's own token check is off.
+[functions.book-pickup]
+verify_jwt = false
+
+[functions.payment-webhook]
+verify_jwt = false
